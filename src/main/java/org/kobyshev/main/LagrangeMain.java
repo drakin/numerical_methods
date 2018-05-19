@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class LagrangeMain {
     public static void main(String[] args) {
         List<Double> x = Arrays.asList(-9., -6., -1., 0., 1.);
         List<Double> y = Arrays.asList(-4., 7., -5., -2., 7.);

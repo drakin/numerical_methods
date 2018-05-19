@@ -13,7 +13,6 @@ import java.util.List;
 public class LagrangeSolver {
     List<Double> xi;
     List<Double> yi;
-    private static double DELTA = 1e-10;
 
     public LagrangeSolver(List<Double> xi, List<Double> yi) {
         Helper.checkArgument("Массив xi не передан.", xi == null);
@@ -49,26 +48,16 @@ public class LagrangeSolver {
             for (int j = 0; j < xi.size(); j++) {
                 if (i != j) {
                     List<Pair<Integer, Integer>> mn1 = new ArrayList<>();
-                    mn1.add(convertTo(-xi.get(j), xi.get(i) - xi.get(j)));
-                    mn1.add(convertTo(1., xi.get(i) - xi.get(j)));
+                    mn1.add(Helper.convertTo(-xi.get(j), xi.get(i) - xi.get(j)));
+                    mn1.add(Helper.convertTo(1., xi.get(i) - xi.get(j)));
                     FractionPolynomial mn = new FractionPolynomial(mn1);
                     prodPolynomial = prodPolynomial.multiply(mn);
                 }
             }
-            sumPolynomial = sumPolynomial.add(prodPolynomial.multiply(new FractionPolynomial(Collections.singletonList(convertTo(yi.get(i), 1.)))));
+            sumPolynomial = sumPolynomial.add(prodPolynomial.multiply(new FractionPolynomial(Collections.singletonList(Helper.convertTo(yi.get(i), 1.)))));
         }
         return sumPolynomial;
 
-    }
-
-    private Pair<Integer, Integer> convertTo(Double a, Double b) {
-        Double key = a;
-        Double value = b;
-        while (Math.floor(key) - key > DELTA && Math.floor(value) - value > DELTA) {
-            key *= 10;
-            value *= 10;
-        }
-        return new Pair<>((int) Math.round(Math.floor(key)), (int) Math.round(Math.floor(value)));
     }
 
     public NumericalPolynomial getNumericalPolynomial() {

@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static org.kobyshev.util.Helper.simplify;
+
 public class FractionPolynomial extends Polynomial<Pair<Integer, Integer>> {
     private List<Pair<Integer, Integer>> coefficients;
 
@@ -59,24 +61,6 @@ public class FractionPolynomial extends Polynomial<Pair<Integer, Integer>> {
                     ad1.getValue() * ad2.getValue()
             );
         }
-    }
-
-
-    private static Pair<Integer, Integer> simplify(Pair<Integer, Integer> pair) {
-        Integer key = pair.getKey();
-        Integer value = pair.getValue();
-        if (value < 0) {
-            key *= -1;
-            value *= -1;
-        }
-        int min = Math.min(Math.abs(key), Math.abs(value));
-        for (int i = 2; i <= min; i++) {
-            while (key % i == 0 && value % i == 0) {
-                key /= i;
-                value /= i;
-            }
-        }
-        return new Pair<>(key, value);
     }
 
     public FractionPolynomial multiply(FractionPolynomial mn) {
